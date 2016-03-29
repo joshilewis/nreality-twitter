@@ -40,7 +40,8 @@ namespace Web.Controllers
                     .SingleOrDefault();
 
             var results = new List<SearchResult>();
-            srch.Statuses.ForEach(entry => results.Add(new SearchResult(entry.StatusID, entry.Text)));
+            srch.Statuses.ForEach(entry => results.Add(new SearchResult(entry.StatusID, entry.Text,
+                entry.User.Name, entry.User.ProfileImageUrl)));
 
             return View(new SearchViewModel(results));
         }

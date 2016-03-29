@@ -10,7 +10,10 @@
     @foreach (var searchResult in Model.SearchResults)
     {
         <li class="list-group-item">
-            @searchResult.Content
+            <div>
+                <img class="img-thumbnail img-responsive" width="48px" height="48px" src="@searchResult.ProfileImageUri"/>
+                @searchResult.Nickname: @searchResult.Content
+            </div>
         </li>
   
     }
