@@ -1,4 +1,22 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using Web.Models
+@model Web.Models.TweetListViewModel
+
+@{
+    ViewBag.Title = "Saved Tweets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Saved Tweets</h2>
+<ul class="list-group">
+    @foreach (var tweet in Model.Tweets)
+    {
+        <li class="list-group-item ">
+            <div>
+                <img class="img-thumbnail img-responsive" style="width: 48px; height: 48px" src="@tweet.ProfileImageUri"/>
+                @tweet.Nickname: @tweet.Content
+                @Html.ActionLink("Remove", "Remove", tweet)
+            </div>
+        </li>
+
+    }
+</ul>

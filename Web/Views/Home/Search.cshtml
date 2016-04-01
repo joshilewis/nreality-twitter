@@ -1,4 +1,5 @@
-﻿@model Web.Models.SearchViewModel
+﻿@using Web.Models
+@model Web.Models.TweetListViewModel
 
 @{
     ViewBag.Title = "Search Results";
@@ -7,14 +8,15 @@
 
 <h2>Search Results</h2>
 <ul class="list-group">
-    @foreach (var searchResult in Model.SearchResults)
+    @foreach (var tweet in Model.Tweets)
     {
-        <li class="list-group-item">
+        <li class="list-group-item ">
             <div>
-                <img class="img-thumbnail img-responsive" width="48px" height="48px" src="@searchResult.ProfileImageUri"/>
-                @searchResult.Nickname: @searchResult.Content
+                <img class="img-thumbnail img-responsive" style="width: 48px; height: 48px" src="@tweet.ProfileImageUri"/>
+                @tweet.Nickname: @tweet.Content
+                @Html.ActionLink("Read later", "Save", tweet)
             </div>
         </li>
-  
+
     }
 </ul>

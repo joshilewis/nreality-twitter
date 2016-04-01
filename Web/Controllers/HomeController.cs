@@ -11,9 +11,11 @@ namespace Web.Controllers
 {
     public class HomeController : Controller
     {
+        private static readonly List<Tweet> SavedTweets = new List<Tweet>();
+
         public ActionResult Index()
         {
-            return View();
+            return View(new TweetListViewModel(SavedTweets));
         }
 
         public ActionResult Search(string searchTerm)
@@ -39,11 +41,23 @@ namespace Web.Controllers
                                                    search.Query == searchTerm))
                     .SingleOrDefault();
 
-            var results = new List<SearchResult>();
-            srch.Statuses.ForEach(entry => results.Add(new SearchResult(entry.StatusID, entry.Text,
+            var results = new List<Tweet>();
+            srch.Statuses.ForEach(entry => results.Add(new Tweet(entry.StatusID, entry.Text,
                 entry.User.Name, entry.User.ProfileImageUrl)));
 
-            return View(new SearchViewModel(results));
+            return View(new TweetListViewModel(results));
+        }
+
+        public ActionResult Save(Tweet tweetToSave)
+        {
+            if (!SavedTweets.Contains(tweetToSave)) SavedTweets.Add(tweetToSave);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Remove(Tweet tweet)
+        {
+            if (SavedTweets.Contains(tweet)) SavedTweets.Remove(tweet);
+            return RedirectToAction("Index");
         }
     }
 }
